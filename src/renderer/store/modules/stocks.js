@@ -25,6 +25,7 @@ const actions = {
   changeStock({ commit }, payload) {
     if(payload.type === 'INCREMENT'){
       db.stocks.update({id:payload._id},{ $set: { openingStock: payload.amount}})
+      db.stocks.update({id:payload._id},{ $set: { openingStock: payload.amount}})
     }
   },
   initStocksState({ commit }) {
