@@ -15,25 +15,9 @@ export const convert = (d) => {
             d.constructor === String ? new Date(d) :
             typeof d === "object" ? new Date(d.year, d.month, d.date) :
             NaN
-        );
+            );
     }
-export const compare =  (a, b) => {
-        // Compare two dates (could be of any type supported by the convert
-        // function above) and returns:
-        //  -1 : if a < b
-        //   0 : if a = b
-        //   1 : if a > b
-        // NaN : if a or b is an illegal date
-        // NOTE: The code inside isFinite does an assignment (=).
-        return (
-            isFinite(a = this.convert(a).valueOf()) &&
-            isFinite(b = this.convert(b).valueOf()) ?
-            (a > b) - (a < b) :
-            NaN
-        );
-    },
-
-export const dateCompare = (a, b) => {
+    export const compare =  (a, b) => {
     // Compare two dates (could be of any type supported by the convert
     // function above) and returns:
     //  -1 : if a < b
@@ -42,9 +26,25 @@ export const dateCompare = (a, b) => {
     // NaN : if a or b is an illegal date
     // NOTE: The code inside isFinite does an assignment (=).
     return (
-        isFinite(a = this.convert(a).valueOf()) &&
-        isFinite(b = this.convert(b).valueOf()) ?
+        isFinite(a = convert(a).valueOf()) &&
+        isFinite(b = convert(b).valueOf()) ?
         (a > b) - (a < b) :
         NaN
+        );
+}
+
+export const dateCompare = (a, b) => {
+// Compare two dates (could be of any type supported by the convert
+// function above) and returns:
+//  -1 : if a < b
+//   0 : if a = b
+//   1 : if a > b
+// NaN : if a or b is an illegal date
+// NOTE: The code inside isFinite does an assignment (=).
+return (
+    isFinite(a = convert(a).valueOf()) &&
+    isFinite(b = convert(b).valueOf()) ?
+    (a > b) - (a < b) :
+    NaN
     );
-},
+}

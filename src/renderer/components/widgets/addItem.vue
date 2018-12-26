@@ -24,56 +24,56 @@
                     <label class="label">Unit Name</label>
                     <div class="select">
                         <select v-model="item.unitName">
-                        <option selected disabled >Select Unit Name</option>
-                        <option class="Option" v-for="unit in units">{{unit.main}}</option>
+                            <option selected disabled >Select Unit Name</option>
+                            <option class="Option" v-for="unit in units">{{unit.main}}</option>
                         </select>
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Stock Group</label>
-                     <div class="select">
-                    <select v-model="item.stockGroup" >
-                      <option disabled >Select Group</option>
-                      <option selected >default</option>
-                      <option class="Option" v-for="group in groups">{{group.group}}</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="field">
-                    <label class="label">Tax Category</label>
                     <div class="select">
-                        <select v-model="item.taxCategory" >
-                            <option disabled selected>Select Category</option>
-                            <option v-for="category in categories">{{ category.category }}</option>
-                        </select>
-                    </div>
+                        <select v-model="item.stockGroup" >
+                          <option disabled >Select Group</option>
+                          <option selected >default</option>
+                          <option class="Option" v-for="group in groups">{{group.group}}</option>
+                      </select>
+                  </div>
+              </div>
+              <div class="field">
+                <label class="label">Tax Category</label>
+                <div class="select">
+                    <select v-model="item.taxCategory" >
+                        <option disabled selected>Select Category</option>
+                        <option v-for="category in categories">{{ category.category }}</option>
+                    </select>
                 </div>
-                <div class="field">
-                    <label class="label">Opening Stock</label>
-                    <div class="control">
-                        <input class="input" placeholder="Opening Stock" @input="openingStockChanged" v-model="item.openingStock">
-                    </div>
+            </div>
+            <div class="field">
+                <label class="label">Opening Stock</label>
+                <div class="control">
+                    <input class="input" placeholder="Opening Stock" @input="openingStockChanged" v-model="item.openingStock">
                 </div>
-                <div class="field">
-                    <label class="label">Rate</label>
-                    <div class="control">
-                        <input class="input" placeholder="Rate" @input="rateChanged" v-model="item.rate">
-                    </div>
+            </div>
+            <div class="field">
+                <label class="label">Rate</label>
+                <div class="control">
+                    <input class="input" placeholder="Rate" @input="rateChanged" v-model="item.rate">
                 </div>
-                <div class="field">
-                    <label class="label">Amount</label>
-                    <div class="control">
-                        <input class="input" placeholder="eg India" v-model="item.amount">
-                    </div>
+            </div>
+            <div class="field">
+                <label class="label">Amount</label>
+                <div class="control">
+                    <input class="input" placeholder="eg India" v-model="item.amount">
                 </div>
-                <div class="field">
-                    <label class="label">Set Selling Price</label>
-                    <div class="checkbox">
-                        <input type="checkbox" id="checkbox" @click="checkbox($event)">
-                        <label for="checkbox"> Set Default</label>
-                    </div>
+            </div>
+            <div class="field">
+                <label class="label">Set Selling Price</label>
+                <div class="checkbox">
+                    <input type="checkbox" id="checkbox" @click="checkbox($event)">
+                    <label for="checkbox"> Set Default</label>
                 </div>
-                <div class="modal" :class="{'is-active': viewAddSellingPrice}">
+            </div>
+            <div class="modal" :class="{'is-active': viewAddSellingPrice}">
                 <div class="modal-background"></div>
                 <div class="modal-card">
                     <header class="modal-card-head">
@@ -89,18 +89,18 @@
                     </footer>
                 </div>
             </div>
-            </section>
+        </section>
 
-            <footer class="modal-card-foot">
-                <button class="button is-success" @click="add">Add</button>
-                <button class="button" @click="$emit('toggleItem',!showItem)">Cancel</button>
-            </footer>
-        </div>
+        <footer class="modal-card-foot">
+            <button class="button is-success" @click="add">Add</button>
+            <button class="button" @click="$emit('toggleItem',!showItem)">Cancel</button>
+        </footer>
     </div>
+</div>
 </template>
 
 <script>
-import Datastore from "nedb";
+// import Datastore from "nedb";
 // import { eventBus } from "../../main";
 
 export default {
@@ -108,61 +108,61 @@ export default {
   props: {
     showItem: Boolean,
     updateItem: Function,
-  },
-  data() {
+},
+data() {
     return {
         groups:[],
         categories: [],
         units:[],
         viewAddSellingPrice:false,
         defaultSP:"",
-      item: {
-        stockName: "",
-        HSNCode: 0,
-        unitName: "Select Unit Name",
-        stockGroup: "default",
-        taxCategory: "Select Category",
-        openingStock: 0,
-        rate: 0,
-        amount: 0,
-        defaultSP:0,
-        location: "",
-      },
-      db: {},
+        item: {
+            stockName: "",
+            HSNCode: 0,
+            unitName: "Select Unit Name",
+            stockGroup: "default",
+            taxCategory: "Select Category",
+            openingStock: 0,
+            rate: 0,
+            amount: 0,
+            defaultSP:0,
+            location: "",
+        },
+        db: {},
     };
-  },
-  methods: {
-      checkbox(event){
+},
+methods: {
+  checkbox(event){
       if(event.target.checked){
         this.viewAddSellingPrice = true;
-      }else if(!event.target.checked){
+    }else if(!event.target.checked){
         this.addSellingPrice(1);
-      }
-    },
-    rateChanged(event){
-        this.item.amount = event.target.value * this.item.openingStock;
-    },
-    openingStockChanged(event){
-        this.item.amount = this.item.rate * event.target.value;
-    },
-     addSellingPrice(price){
+    }
+},
+rateChanged(event){
+    this.item.amount = event.target.value * this.item.openingStock;
+},
+openingStockChanged(event){
+    this.item.amount = this.item.rate * event.target.value;
+},
+addSellingPrice(price){
       // console.log(price);
       this.viewAddSellingPrice = false;
       this.item.defaultSP = price;
       this.defaultSP = 0;
-    },
-    add() {
+  },
+  add() {
       // check for empty value
-        this.db.stocks = new Datastore({ filename: "stocks", autoload: true });
-        let nullValues = false;
-        if (this.item.stockName == "") {
-                nullValues = true;
-        }
+      this.db.stocks = new this.$db({ filename: "stocks", autoload: true });
+      let nullValues = false;
+      if (this.item.stockName == "") {
+        nullValues = true;
+    }
+    
+    if(!nullValues){
         
-        if(!nullValues){
-                
-                this.db.stocks.findOne({stockName:this.item.stockName}, (err, docs) => {
-                    if (docs !== null) {
+        this.db.stocks.findOne({stockName:this.item.stockName}, (err, docs) => {
+            if (docs !== null) {
                         // console.log("found");
                         alert("Error!! Data Already Present in Database")
                     } else {
@@ -173,7 +173,7 @@ export default {
                                 console.log(err);
                             } else {
                                 alert("SuccessFully Added to Database");
-                    
+                                
                                 this.$emit("toggleItem", !this.showItem);
                                 this.updateItem(this.item);
                             }
@@ -181,57 +181,57 @@ export default {
                     }
 
                 }); 
-        }else{
-            alert("Non of the Fields can be empty!!", "Stock Manager");
-        }
-    },
-  },
-  created() {
-    this.db.units = new Datastore({ filename: "units", autoload: true });
-    this.db.groups = new Datastore({ filename: "groups", autoload: true });
-    this.db.categories = new Datastore({
+    }else{
+        alert("Non of the Fields can be empty!!", "Stock Manager");
+    }
+},
+},
+created() {
+    this.db.units = new this.$db({ filename: "units", autoload: true });
+    this.db.groups = new this.$db({ filename: "groups", autoload: true });
+    this.db.categories = new this.$db({
       filename: "categories",
       autoload: true,
-    });
+  });
 
     this.db.units.find({}, (err, docs) => {
       if (err !== null) {
         alert("Error");
         console.log(err);
-      } else {
+    } else {
         docs.forEach(d => {
           this.units.push(d);
-        });
+      });
         
-      }
-    });
+    }
+});
 
     
     this.db.categories.find({}, (err, docs) => {
       if (err !== null) {
         alert("Error");
         console.log(err);
-      } else {
+    } else {
         docs.forEach(d => {
           this.categories.push(d);
-        });
+      });
         
-      }
-    });
+    }
+});
 
     // Get Group data from database
     this.db.groups.find({}, (err, docs) => {
       if (err !== null) {
         alert("Error");
         console.log(err);
-      } else {
+    } else {
         docs.forEach(d => {
-           this.groups.push(d);
-        });
-      }
+         this.groups.push(d);
+     });
+    }
 
-    });
-  },
+});
+},
 };
 </script>
 
