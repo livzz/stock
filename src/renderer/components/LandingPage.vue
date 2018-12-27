@@ -89,7 +89,7 @@
       //   id: '6TxJ3xisw86EP64w',
       //   quantity: 4,
       //   date: this.getToday(),
-      //   type: "INCREMENT",
+      //   type: "DECREMENT",
       // }
       // this.$store.dispatch("changeStock", changeData);
       this.$store.dispatch("initInvoiceState");

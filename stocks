@@ -1,4 +1,4 @@
-{"stockName":"nokia","HSNCode":"3333","unitName":"pieces","stockGroup":"phones","taxCategory":"7","openingStock":"18","closingStock":"22","rate":"2","amount":68,"defaultSP":0,"location":"","_id":"6TxJ3xisw86EP64w","lastUpdated":"2018-12-28","date":"2018-12-27"}
+{"stockName":"nokia","HSNCode":"3333","unitName":"pieces","stockGroup":"phones","taxCategory":"7","openingStock":"26","closingStock":"22","rate":"2","amount":68,"defaultSP":0,"location":"","_id":"6TxJ3xisw86EP64w","lastUpdated":"2018-12-27","date":"2018-12-27"}
 {"stockName":"kingfisher","HSNCode":"2323","unitName":"Liter","stockGroup":"Alcohol","taxCategory":"Alcohol","openingStock":"122","closingStock":"122","rate":"2","amount":244,"defaultSP":0,"location":"","_id":"8jkjdCN8AFesje5C"}
 {"stockName":"iphone","HSNCode":"8796","unitName":"pieces","stockGroup":"phones","taxCategory":"Phone","openingStock":"100","closingStock":"100","rate":"10","amount":1000,"defaultSP":0,"location":"","_id":"Hd74T66psNpwg0T9"}
 {"stockName":"samsung","HSNCode":"2222","unitName":"pieces","stockGroup":"phones","taxCategory":"7","openingStock":"12","closingStock":"12","rate":"2","amount":24,"defaultSP":0,"location":"","_id":"JzpNOiEckjDLy6hg"}
@@ -7,4 +7,3 @@
 {"stockName":"Amul Taaza","HSNCode":"995923","unitName":"Liter","stockGroup":"Milk","taxCategory":"Milk","openingStock":"9","closingStock":"9","rate":"3","amount":66,"defaultSP":0,"location":"","_id":"WZNFyz8WSsYL4MAr"}
 {"stockName":"laptop","HSNCode":"1234","unitName":"pieces","stockGroup":"Milk","taxCategory":"Milk","openingStock":"100","closingStock":"100","rate":"2","amount":200,"defaultSP":"12000","location":"","_id":"pwwUGs5diDN91Vtw"}
 {"stockName":"pencil","HSNCode":"8888","unitName":"pieces","stockGroup":"New","taxCategory":"5","openingStock":"1000","closingStock":"1000","rate":"2","amount":2000,"defaultSP":0,"location":"","_id":"uO2k3jI2mveo6DO6"}
-{"stockName":"nokia","HSNCode":"3333","unitName":"pieces","stockGroup":"phones","taxCategory":"7","openingStock":"18","closingStock":"26","rate":"2","amount":68,"defaultSP":0,"location":"","_id":"6TxJ3xisw86EP64w","lastUpdated":"2018-12-28","date":"2018-12-27"}
