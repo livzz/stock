@@ -78,18 +78,25 @@
       };
     },
     created() {
+      // Nokia
       // const changeData = {
       //   id: '6TxJ3xisw86EP64w',
-      //   openingStock: 34,
       //   quantity: 4,
       //   date: this.getToday(),
       //   type: "INCREMENT",
       // }
+      // const changeData = {
+      //   id: '6TxJ3xisw86EP64w',
+      //   quantity: 4,
+      //   date: this.getToday(),
+      //   type: "INCREMENT",
+      // }
+      // this.$store.dispatch("changeStock", changeData);
       this.$store.dispatch("initInvoiceState");
       this.$store.dispatch("initProfileState");
       this.$store.dispatch("initUQCCodeState");
       this.$store.dispatch("initStocksState");
-      // this.$store.dispatch("changeStock", changeData);
+      
     },
   };
 </script>

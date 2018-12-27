@@ -1,8 +1,8 @@
 import Datastore from "nedb";
-import * as utils from "../utils";
+// import * as utils from "../utils";
 let db = {};
 db.stocks = new Datastore({ filename: "stocks", autoload: true });
-db.stock_log = new Datastore({ filename: "stock_log", autoload: true,timestampData: true });
+// db.stock_log = new Datastore({ filename: "stock_log", autoload: true,timestampData: true });
 
 const state = {
   stocks: [],
@@ -29,86 +29,57 @@ const actions = {
 
     // })
 
-    const logData = {
-      os: '',
-      cs: '',
-      date: ''
+    const stockData = {
+      openingStock: '',
+      closingStock: '',
+      lastUpdated: ''
     }
 
-    if(payload.type === 'INCREMENT'){
-      db.stocks.update({id:payload.id},{ $set: { openingStock: payload.openingStock + payload.quantity}})
-      logData.os = payload.openingStock;
-      logData.cs = payload.openingStock + payload.quantity;
-      logData.date = payload.date
-    }
-    db.stock_log.findOne({item:payload.id},(err,doc) => {
-      if(doc.length === 0) {
-        db.stock_log.insert({
-          item: payload.id, logs: [logData]
-        }, (err, newDoc) => {
-          if(err) {
-            alert("Error while inserting into Database!!", "Stock Manager");
-          }
-        })
+    db.stocks.findOne({
+      _id: payload.id
+    }, (err,doc) => {
+      const lastUpdated = doc.lastUpdated
+      const openingStock = doc.openingStock
+      const closingStock = doc.closingStock
+
+      if(lastUpdated === payload.date) {
+        stockData.openingStock = openingStock // same date thus opening stock will not change
       } else {
-        dispatch('_persistChanges', {
-          id: payload.id,
-          data: logData,
-          quantity: payload.quantity,
-          type: payload.type,
-          date: payload.date,
-          openingStock: payload.openingStock
-        })
+        stockData.openingStock = closingStock // first entry on a particular
       }
+
+      switch(payload.type) {
+        case 'INCREMENT' : 
+        stockData.closingStock = `${parseInt(closingStock) + payload.quantity}`
+        break;
+        case 'DECREMENT' :
+        stockData.closingStock = `${parseInt(closingStock) - payload.quantity}`
+        break;
+      }
+      stockData.lastUpdated = payload.date  
+      console.log("Stock Data", stockData)
+      console.log("Find One Data ", doc)
+      db.stocks.update({_id:payload.id},{ $set: stockData})
     })
+    
+    
+    
   },
-  _persistChanges({dispatch}, newData) {
-    let logEntryFoundFlag = false;
-    db.stock_log.findOne({
-      item: newData._id
-    },(err,doc) => {
-      doc.logs.forEach((log,index,logs) => {
-        if(utils.dateCompare(log.date,newData.date) === 0){
-          logEntryFoundFlag = true;
-          if(newData.type === 'INCREMENT'){
-            logs[index].cs = newData.quantity + newData.openingStock
-          }
-          db.stock_log.update({
-            _id: newData._id
-          }, {
-            $set: {
-              logs: logs
-            }
-          })
+  
+  initStocksState({ commit }) {
+    db.stocks.find({}, (err, docs) => {
+      if (err) {
+        alert("Error Loading Database!!", "Stock Manager");
+        console.log(err);
+      } else {
+        if (docs.length > 0) {
+          docs.forEach(d => {
+            commit('populateStock',Object.assign({},d))
+          });
         }
-      })
-
-    })
-
-    if(!logEntryFoundFlag){
-     db.stock_log.update({
-       item: newData.id
-     }, {
-       $push: {
-         logs: newData.data
-       }
-     })
-   }
- },
- initStocksState({ commit }) {
-  db.stocks.find({}, (err, docs) => {
-    if (err) {
-      alert("Error Loading Database!!", "Stock Manager");
-      console.log(err);
-    } else {
-      if (docs.length > 0) {
-        docs.forEach(d => {
-          commit('populateStock',Object.assign({},d))
-        });
       }
-    }
-  });
-}
+    });
+  }
 };
 
 export default {
