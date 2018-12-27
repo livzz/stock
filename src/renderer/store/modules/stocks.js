@@ -53,7 +53,11 @@ const actions = {
         stockData.closingStock = `${parseInt(closingStock) + payload.quantity}`
         break;
         case 'DECREMENT' :
-        stockData.closingStock = `${parseInt(closingStock) - payload.quantity}`
+        if((parseInt(closingStock) - payload.quantity) <= 0 ){
+          alert("Your Stock is to low","Stock Manager")
+        } else {
+          stockData.closingStock = `${parseInt(closingStock) - payload.quantity}`  
+        }
         break;
       }
       stockData.lastUpdated = payload.date  

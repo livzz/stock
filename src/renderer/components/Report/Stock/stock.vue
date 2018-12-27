@@ -55,7 +55,7 @@
         <th>Rate</th>
         <th>Opening Stock</th>
         <th>Closing Stock</th>
-
+        <th>Last Transaction</th>
 
       </tr>
     </thead>
@@ -84,7 +84,9 @@
      <td>
        {{row.closingStock}}
      </td>
-
+     <td>
+       {{row.lastUpdated ? row.lastUpdated : 'Never'}}
+     </td>
      
    </tr>
  </tbody>
