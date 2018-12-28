@@ -245,17 +245,6 @@
           return this.data.selectedParty;
         }
       },
-      _stockChanged(){
-        this.rows.forEach((data) => {
-          let changeData = {
-            id: data.id,
-            quantity: parseInt(data.quantity),
-            date: this.getToday(),
-            type: "INCREMENT",
-          }
-          this.changeStock(changeData);
-        })
-      },
       submit() {
       // console.log("a")
       if (this.checkFields()) {
@@ -271,26 +260,43 @@
             totalAmount: this.getTotalSalesAmount(),
           },
         };
-        let child = this.$refs.complete;
+        // let child = this.$refs.complete;
         this.db.purchaseEntry.insert(x, err => {
           if (err) {
             alert("Error Try Again!!", "Stock Manager");
           } else {
             this._stockChanged();
-            this.rows = [];
-            this.gstSummaryRows = [];
-            this.addRow();
-            alert("Done!!", "Stock Manager");
-            child.refresh();
-            this.$store.dispatch("incrementInvoice")
-
           }
         });
       } // else {
         // alert("None of the Fields can be empty", "Stock Manager");
      // }
    },
-   selected(event,i){
+   _clearData() {
+    this.rows = [];
+    this.gstSummaryRows = [];
+    this.addRow();
+    alert("Done!!", "Stock Manager");
+    this.refresh();
+    this.$store.dispatch("incrementInvoice");
+  },
+  async _stockChanged() {
+    const changes = [];
+    this.rows.forEach((data, index, arr) => {
+      let changeData = {
+        id: data.id,
+        quantity: parseInt(data.quantity),
+        date: this.getToday(),
+        type: "INCREMENT"
+      };
+      changes.push(this.changeStock(changeData));
+    });
+    console.log(changes);
+    await Promise.all([...changes]).then(() => {
+      this._clearData();
+    });
+  },
+  selected(event,i){
     let stock = this.findStock(event)[0];
     let row = this.rows[i];
     row.stockName = stock.stockName;
@@ -361,6 +367,7 @@
 created() {
   this.db.stocks = new Datastore({ filename: "stocks", autoload: true });
   this.db.category = new this.$db({filename: "categories", autoload: true});
+  this.db.category.loadDatabase();
   this.db.stocks.find({}, (err, docs) => {
     if (err) {
       alert("Database Error", "Stock Manager");
@@ -376,6 +383,7 @@ created() {
       alert("Database Error", "Stock Manager");
       console.log(err);
     } else {
+      console.log(docs)
       this.category = docs;
     }
   });

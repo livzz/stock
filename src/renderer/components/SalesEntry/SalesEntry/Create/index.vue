@@ -18,9 +18,9 @@
                     <select v-model="selectedParty">
                       <option value="cash" selected>cash</option>
                       <option
-                        v-for="(account,i) in party"
-                        :key="i"
-                        :value="account"
+                      v-for="(account,i) in party"
+                      :key="i"
+                      :value="account"
                       >{{account.name}}</option>
                     </select>
                   </div>
@@ -60,9 +60,9 @@
       </div>
 
       <app-add-party
-        :updateParty="updateParty"
-        :showParty="addParty"
-        @toggleParty="addParty = $event"
+      :updateParty="updateParty"
+      :showParty="addParty"
+      @toggleParty="addParty = $event"
       ></app-add-party>
       <app-add-item :updateItem="updateItem" :showItem="addItem" @toggleItem="addItem = $event"></app-add-item>
     </div>
@@ -94,11 +94,11 @@
             <th>{{ i + 1 }}</th>
             <td>
               <auto-complete
-                ref="complete"
-                v-if="reload"
-                :items="stocks"
-                v-model="row.stockName"
-                v-on:Selected="selected($event,i)"
+              ref="complete"
+              v-if="reload"
+              :items="stocks"
+              v-model="row.stockName"
+              v-on:Selected="selected($event,i)"
               ></auto-complete>
             </td>
             <td>
@@ -106,20 +106,20 @@
             </td>
             <td>
               <input
-                class="input"
-                type="number"
-                placeholder="Qty"
-                v-model="row.quantity"
-                @input="quantityOrRateChanged(i)"
+              class="input"
+              type="number"
+              placeholder="Qty"
+              v-model="row.quantity"
+              @input="quantityOrRateChanged(i)"
               >
             </td>
             <td>
               <input
-                class="input"
-                type="number"
-                placeholder="Rate"
-                v-model="row.rate"
-                @input="quantityOrRateChanged(i)"
+              class="input"
+              type="number"
+              placeholder="Rate"
+              v-model="row.rate"
+              @input="quantityOrRateChanged(i)"
               >
             </td>
             <td>
@@ -127,38 +127,38 @@
             </td>
             <td>
               <input
-                class="input"
-                type="number"
-                placeholder="Discount"
-                v-model="row.discount"
-                @input="discountChanged(row.flag,i)"
+              class="input"
+              type="number"
+              placeholder="Discount"
+              v-model="row.discount"
+              @input="discountChanged(row.flag,i)"
               >
               <br>
               <input
-                id="percentage"
-                class="checkbox"
-                name="percentage"
-                type="checkbox"
-                @change="percentageChanged($event,i)"
+              id="percentage"
+              class="checkbox"
+              name="percentage"
+              type="checkbox"
+              @change="percentageChanged($event,i)"
               >
               <label for="percentage">Percentage</label>
             </td>
             <td>
               <input
-                class="input"
-                type="number"
-                placeholder="Taxable Value"
-                @change="taxableValueChanged()"
-                v-model="row.taxableValue"
+              class="input"
+              type="number"
+              placeholder="Taxable Value"
+              @change="taxableValueChanged()"
+              v-model="row.taxableValue"
               >
             </td>
             <td>
               <input
-                class="input"
-                type="number"
-                placeholder="Tax Rate"
-                v-model="row.taxPer"
-                @input="taxChanged(i)"
+              class="input"
+              type="number"
+              placeholder="Tax Rate"
+              v-model="row.taxPer"
+              @input="taxChanged(i)"
               >
             </td>
             <td>
@@ -166,10 +166,10 @@
             </td>
             <td>
               <input
-                class="input"
-                type="number"
-                placeholder="Total Amount"
-                v-model="row.totalAmount"
+              class="input"
+              type="number"
+              placeholder="Total Amount"
+              v-model="row.totalAmount"
               >
             </td>
           </tr>
@@ -221,67 +221,67 @@
 </template>
 
 <script>
-import html2canvas from "html2canvas";
-import JSPDF from "jspdf";
-import autoComplete from "../../../widgets/autoComplete";
-import appAddParty from "../../../widgets/addParty";
-import appAddItem from "../../../widgets/addItem";
-import { mapGetters } from "vuex";
+  import html2canvas from "html2canvas";
+  import JSPDF from "jspdf";
+  import autoComplete from "../../../widgets/autoComplete";
+  import appAddParty from "../../../widgets/addParty";
+  import appAddItem from "../../../widgets/addItem";
+  import { mapGetters } from "vuex";
 
-export default {
-  name: "addSalesList",
-  components: {
-    autoComplete,
-    appAddParty,
-    appAddItem
-  },
-  data() {
-    return {
-      date: "",
-      viewToken: 0,
-      addParty: false,
-      addItem: false,
-      party: [],
-      db: {},
-      selectedParty: "cash",
-      invoiceNumber: 0,
-      gstinNumber: "",
-      invoice: {
-        number: 0,
-        prefix: "",
-        suffix: 0,
-        enable: false
-      },
-      rows: [],
-      gstSummaryRows: [],
-      db: {},
-      reload: true,
-      stocks: [],
-      stockName: [],
-      item: [],
-      viewDiscount: false,
-      summary_taxableAmount: 0,
-      summary_CGST: 0,
-      summary_SGST: 0,
-      summary_IGST: 0,
-      summary_totalAmount: 0,
-      localParty: true,
-      summary_partyGstNo: "",
-      category: [],
-      limit: "",
-      IsPeriod: true,
-      Check: true,
-      opening: ""
-    };
-  },
-  methods: {
+  export default {
+    name: "addSalesList",
+    components: {
+      autoComplete,
+      appAddParty,
+      appAddItem
+    },
+    data() {
+      return {
+        date: "",
+        viewToken: 0,
+        addParty: false,
+        addItem: false,
+        party: [],
+        db: {},
+        selectedParty: "cash",
+        invoiceNumber: 0,
+        gstinNumber: "",
+        invoice: {
+          number: 0,
+          prefix: "",
+          suffix: 0,
+          enable: false
+        },
+        rows: [],
+        gstSummaryRows: [],
+        db: {},
+        reload: true,
+        stocks: [],
+        stockName: [],
+        item: [],
+        viewDiscount: false,
+        summary_taxableAmount: 0,
+        summary_CGST: 0,
+        summary_SGST: 0,
+        summary_IGST: 0,
+        summary_totalAmount: 0,
+        localParty: true,
+        summary_partyGstNo: "",
+        category: [],
+        limit: "",
+        IsPeriod: true,
+        Check: true,
+        opening: ""
+      };
+    },
+    methods: {
     // reset summary record after upload
     resetSummary() {
       (this.summary_taxableAmount = 0),
-        (this.summary_CGST = 0),
-        (this.summary_SGST = 0),
-        (this.summary_IGST = 0),
-        (this.summary_totalAmount = 0);
+      (this.summary_CGST = 0),
+      (this.summary_SGST = 0),
+      (this.summary_IGST = 0),
+      (this.summary_totalAmount = 0);
     },
     // reset rows after upload
     resetRows() {
@@ -332,7 +332,7 @@ export default {
     discountChanged(flag, i) {
       if (flag) {
         this.rows[i].taxableValue =
-          this.rows[i].amount * (1 - this.rows[i].discount / 100.0);
+        this.rows[i].amount * (1 - this.rows[i].discount / 100.0);
       } else {
         this.rows[i].taxableValue = this.rows[i].amount - this.rows[i].discount;
       }
@@ -344,13 +344,12 @@ export default {
     },
     gstChnaged(i) {
       this.rows[i].gst =
-        this.rows[i].taxableValue * (this.rows[i].taxPer / 100.0);
+      this.rows[i].taxableValue * (this.rows[i].taxPer / 100.0);
       this.getTotalAmount(i);
     },
     getTotalAmount(i) {
       this.rows[i].totalAmount = this.rows[i].taxableValue + this.rows[i].gst;
     },
-
     calculateGstSummary(i) {
       this.gstSummaryRows = [];
       this.rows.forEach(d => {
@@ -387,13 +386,13 @@ export default {
         this.gstSummaryRows[i].taxableAmount = parseFloat(
           (
             parseFloat(this.gstSummaryRows[i].taxableAmount) + parseFloat(t)
-          ).toFixed(2)
-        );
+            ).toFixed(2)
+          );
         this.gstSummaryRows[i].cgst += parseFloat((g / 2.0).toFixed(2));
         this.gstSummaryRows[i].sgst += parseFloat((g / 2.0).toFixed(2));
         this.gstSummaryRows[i].igst += parseFloat(g.toFixed(2));
         this.gstSummaryRows[i].totalAmount =
-          this.gstSummaryRows[i].taxableAmount + this.gstSummaryRows[i].igst;
+        this.gstSummaryRows[i].taxableAmount + this.gstSummaryRows[i].igst;
       } else if (!found) {
         this.gstSummaryRows.push({
           rate: r,
@@ -424,7 +423,7 @@ export default {
       this.summary_IGST = parseFloat(igstSum).toFixed(2);
       this.summary_totalAmount = parseFloat(this.getTotalSalesAmount()).toFixed(
         2
-      );
+        );
     },
     getTotalSalesAmount() {
       let sum = 0;
@@ -452,22 +451,6 @@ export default {
       }
       return this.selectedParty;
     },
-    //  getPeriod(item){
-    //   console.log(item);
-    //  this.db.sales.find({"stocKName":item}, (err, docs) => {
-    //   if (err !== null) {
-    //   alert("Error");
-    //   console.log(err);
-    //   } else {
-    //   docs.forEach(d => {
-    //  console.log("stocks",d.detail.date);
-
-    //   });
-    //  }
-    //  });
-
-    //     },
-
     stock(item) {
       // console.log(item);
       this.db.stocks.find({ stockName: item }, (err, docs) => {
@@ -477,7 +460,6 @@ export default {
         } else {
           docs.forEach(d => {
             this.limit = d.openingStock;
-
             console.log(this.limit);
             if (d.openingStock != 0) {
               this.Check = true;
@@ -513,7 +495,7 @@ export default {
           }
         };
         this.db.sales.insert(x, err => {
-          if (err) {
+          if (err)  {
             alert("Error Try Again!!", "Stock Manager");
           } else {
             this._stockChanged();
@@ -523,7 +505,7 @@ export default {
         alert(
           "None of the Fields can be empty or Out Of Stock",
           "Stock Manager"
-        );
+          );
       }
     },
     _clearData() {
@@ -562,7 +544,7 @@ export default {
         stock.taxCategory,
         this.date,
         this.getToday()
-      );
+        );
     },
     addRow() {
       const x = {
@@ -607,14 +589,14 @@ export default {
       let startDateRange = this._getTaxRateList(categoryName);
       let dates = startDateRange.filter(data =>
         this.inRange(entryDate, data.date, endDate)
-      );
+        );
       console.log("At getTaxRate", dates);
       return dates[dates.length - 1].value;
     },
     _getTaxRateList(categoryName) {
       let list = this.category.filter(
         data => data.category === categoryName.toLowerCase()
-      );
+        );
       console.log("At _getTaxRateList ", categoryName, " ", list);
       return list[0].rateList;
     },
@@ -744,7 +726,7 @@ export default {
       "getInvoiceSuffix",
       "getEnableInvoice",
       "getBillFormat"
-    ]),
+      ]),
     filterList: function() {
       return this.stocks.filter(data => {
         let patt = new RegExp("^" + this.search + "");
