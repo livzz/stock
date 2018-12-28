@@ -87,15 +87,15 @@
       // }
       // const changeData = {
       //   id: '6TxJ3xisw86EP64w',
-      //   quantity: 4,
+      //   quantity: 1,
       //   date: this.getToday(),
-      //   type: "DECREMENT",
+      //   type: "INCREMENT",
       // }
-      // this.$store.dispatch("changeStock", changeData);
+      // this.changeStock(changeData);
       this.$store.dispatch("initInvoiceState");
       this.$store.dispatch("initProfileState");
       this.$store.dispatch("initUQCCodeState");
-      this.$store.dispatch("initStocksState");
+      // this.$store.dispatch("initStocksState");
       
     },
   };

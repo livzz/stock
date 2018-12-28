@@ -65,63 +65,63 @@
     <div id="table-scroll">
       <table class="table is-bordered is-striped">
         <thead>
-        <tr>
-          <th><abbr title="Serial No.">Sl.</abbr></th>
-          <th>Items</th>
-          <th>HSN Code</th>
-          <th><abbr title="Quantity">Qty</abbr></th>
-          <th>Rate</th>
-          <th>Amount</th>
-          <th>Discount</th>
-          <th>Taxable Value</th>
-          <th>Tax %</th>
-          <th>GST</th>
-          <th>Total Amount</th>
-        </tr>
+          <tr>
+            <th><abbr title="Serial No.">Sl.</abbr></th>
+            <th>Items</th>
+            <th>HSN Code</th>
+            <th><abbr title="Quantity">Qty</abbr></th>
+            <th>Rate</th>
+            <th>Amount</th>
+            <th>Discount</th>
+            <th>Taxable Value</th>
+            <th>Tax %</th>
+            <th>GST</th>
+            <th>Total Amount</th>
+          </tr>
         </thead>
         <tbody>
-        <tr v-for="(row,i) in rows" :key="i">
-          <th>{{ i + 1 }}</th>
-          <td>
-            <auto-complete ref="complete" v-if="reload" :items="stocks" v-model="row.stockName"
-                           v-on:Selected="selected($event,i)"></auto-complete>
-          </td>
-          <td>
-            <input class="input" type="number" placeholder="HSN Code" v-model="row.HSNCode">
-          </td>
-          <td>
-            <input class="input" type="number" placeholder="Qty" v-model="row.quantity"
-                   @input="quantityOrRateChanged(i)">
-          </td>
-          <td>
-            <input class="input" type="number" placeholder="Rate" v-model="row.rate" @input="quantityOrRateChanged(i)">
-          </td>
-          <td>
-            <input class="input" type="number" placeholder="Qty x Rate" v-model="row.amount">
-          </td>
-          <td>
-            <input class="input" type="number" placeholder="Discount" v-model="row.discount"
-                   @input="discountChanged(row.flag,i)">
-            <br>
-            <input id="percentage" class="checkbox" name="percentage" type="checkbox"
-                   @change="percentageChanged($event,i)">
-            <label for="percentage">Percentage</label>
-          </td>
-          <td>
-            <input class="input" type="number" placeholder="Taxable Value" @change="taxableValueChanged()"
-                   v-model="row.taxableValue">
-          </td>
-          <td>
-            <input class="input" type="number" placeholder="Tax Rate" v-model="row.taxPer" @input="taxChanged(i)">
-          </td>
-          <td>
-            <input class="input" type="number" placeholder="GST" v-model="row.gst">
-          </td>
-          <td>
-            <input class="input" type="number" placeholder="Total Amount" v-model="row.totalAmount">
+          <tr v-for="(row,i) in rows" :key="i">
+            <th>{{ i + 1 }}</th>
+            <td>
+              <auto-complete ref="complete" v-if="reload" :items="stocks" v-model="row.stockName"
+              v-on:Selected="selected($event,i)"></auto-complete>
+            </td>
+            <td>
+              <input class="input" type="number" placeholder="HSN Code" v-model="row.HSNCode">
+            </td>
+            <td>
+              <input class="input" type="number" placeholder="Qty" v-model="row.quantity"
+              @input="quantityOrRateChanged(i)">
+            </td>
+            <td>
+              <input class="input" type="number" placeholder="Rate" v-model="row.rate" @input="quantityOrRateChanged(i)">
+            </td>
+            <td>
+              <input class="input" type="number" placeholder="Qty x Rate" v-model="row.amount">
+            </td>
+            <td>
+              <input class="input" type="number" placeholder="Discount" v-model="row.discount"
+              @input="discountChanged(row.flag,i)">
+              <br>
+              <input id="percentage" class="checkbox" name="percentage" type="checkbox"
+              @change="percentageChanged($event,i)">
+              <label for="percentage">Percentage</label>
+            </td>
+            <td>
+              <input class="input" type="number" placeholder="Taxable Value" @change="taxableValueChanged()"
+              v-model="row.taxableValue">
+            </td>
+            <td>
+              <input class="input" type="number" placeholder="Tax Rate" v-model="row.taxPer" @input="taxChanged(i)">
+            </td>
+            <td>
+              <input class="input" type="number" placeholder="GST" v-model="row.gst">
+            </td>
+            <td>
+              <input class="input" type="number" placeholder="Total Amount" v-model="row.totalAmount">
 
-          </td>
-        </tr>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -129,42 +129,42 @@
     <div class="sumary">
       <table class="table is-bordered is-striped">
         <thead>
-        <tr>
-          <th>Tax Rate</th>
-          <th>Taxable Amount</th>
-          <template v-if="localParty">
-            <th>CGST</th>
-            <th>SGST</th>
-          </template>
-          <th v-else>IGST</th>
-          <th>Total Amount</th>
-        </tr>
+          <tr>
+            <th>Tax Rate</th>
+            <th>Taxable Amount</th>
+            <template v-if="localParty">
+              <th>CGST</th>
+              <th>SGST</th>
+            </template>
+            <th v-else>IGST</th>
+            <th>Total Amount</th>
+          </tr>
         </thead>
         <tbody>
 
-        <tr v-for="row in gstSummaryRows">
-          <td>{{row.rate}}</td>
-          <td>{{row.taxableAmount}}</td>
-          <template v-if="localParty">
-            <td>{{row.cgst}}</td>
-            <td>{{row.sgst}}</td>
-          </template>
-          <td v-else></td>
-          <td>{{row.totalAmount}}</td>
-        </tr>
+          <tr v-for="row in gstSummaryRows">
+            <td>{{row.rate}}</td>
+            <td>{{row.taxableAmount}}</td>
+            <template v-if="localParty">
+              <td>{{row.cgst}}</td>
+              <td>{{row.sgst}}</td>
+            </template>
+            <td v-else></td>
+            <td>{{row.totalAmount}}</td>
+          </tr>
 
         </tbody>
         <thead>
-        <tr>
-          <td>Totals</td>
-          <td>{{summary_taxableAmount}}</td>
-          <template v-if="localParty">
-            <td>{{summary_CGST}}</td>
-            <td>{{summary_SGST}}</td>
-          </template>
-          <td v-else>{{summary_IGST}}</td>
-          <td>{{summary_totalAmount}}</td>
-        </tr>
+          <tr>
+            <td>Totals</td>
+            <td>{{summary_taxableAmount}}</td>
+            <template v-if="localParty">
+              <td>{{summary_CGST}}</td>
+              <td>{{summary_SGST}}</td>
+            </template>
+            <td v-else>{{summary_IGST}}</td>
+            <td>{{summary_totalAmount}}</td>
+          </tr>
         </thead>
       </table>
 
@@ -233,10 +233,10 @@
       // reset summary record after upload
       resetSummary() {
         this.summary_taxableAmount = 0,
-          this.summary_CGST = 0,
-          this.summary_SGST = 0,
-          this.summary_IGST = 0,
-          this.summary_totalAmount = 0
+        this.summary_CGST = 0,
+        this.summary_SGST = 0,
+        this.summary_IGST = 0,
+        this.summary_totalAmount = 0
       },
       // reset rows after upload
       resetRows() {
@@ -287,21 +287,19 @@
       discountChanged(flag, i) {
         if (flag) {
           this.rows[i].taxableValue =
-            this.rows[i].amount * (1 - this.rows[i].discount / 100.0);
+          this.rows[i].amount * (1 - this.rows[i].discount / 100.0);
         } else {
           this.rows[i].taxableValue = this.rows[i].amount - this.rows[i].discount;
         }
-
         this.gstChnaged(i);
         this.calculateGstSummary(i);
       },
       taxChanged(i) {
         this.gstChnaged(i);
       },
-
       gstChnaged(i) {
         this.rows[i].gst =
-          this.rows[i].taxableValue * (this.rows[i].taxPer / 100.0);
+        this.rows[i].taxableValue * (this.rows[i].taxPer / 100.0);
         this.getTotalAmount(i);
       },
       getTotalAmount(i) {
@@ -344,8 +342,8 @@
           this.gstSummaryRows[i].taxableAmount = parseFloat(
             (
               parseFloat(this.gstSummaryRows[i].taxableAmount) + parseFloat(t)
-            ).toFixed(2)
-          );
+              ).toFixed(2)
+            );
           this.gstSummaryRows[i].cgst += parseFloat((g / 2.0).toFixed(2));
           this.gstSummaryRows[i].sgst += parseFloat((g / 2.0).toFixed(2));
           this.gstSummaryRows[i].igst += parseFloat(g.toFixed(2));
@@ -415,7 +413,7 @@
      //   } else {
        //   docs.forEach(d => {
        //  console.log("stocks",d.detail.date);
-                  
+
        //   });
       //  }
     //  });
@@ -424,172 +422,181 @@
       
       stock(item){
        // console.log(item);
-        this.db.stocks.find({"stockName":item}, (err, docs) => {
+       this.db.stocks.find({"stockName":item}, (err, docs) => {
         if (err !== null) {
           alert("Error");
           console.log(err);
         } else {
           docs.forEach(d => {
-          
+
            this.limit=d.openingStock;
 
            console.log(this.limit);
-            if(d.openingStock!=0){
-                 this.Check=true;
-                 
-                }else{
-                  this.Check=false;
-                  alert("Item is Out Of Stock");
-                }
-                  
-          });
+           if(d.openingStock!=0){
+             this.Check=true;
+
+           }else{
+            this.Check=false;
+            alert("Item is Out Of Stock");
+          }
+
+        });
         }
       });
 
-      },
-      checkTrue(){
-        console.log("true");
-           return true;
-      },
-      checkFalse(){
-        console.log("false");
-         return false;
-      },
-      submit() {
-        // console.log("a")
-     //   this.getOpening(this.rows[0].stockName)
-        if (this.checkFields() && this.limit!=0) {
-          const x = {
-            items: this.rows,
-            detail: {
-              invoice: this.invoiceNumber,
-              date: this.date,
-              party: this.getPartyName(),
-              gstNo: this.getPartyGstNo(),
-              totalGst: this.getTotalGst(),
-              getTotalTaxableAmount: this.getTotalTaxableAmount(),
-              totalAmount: this.getTotalSalesAmount(),
-              localParty: this.localParty,
-            
-            }
-          };
-          //  console.log(x);
-          this.db.sales.insert(x, err => {
-            if (err) {
-              alert("Error Try Again!!", "Stock Manager");
-            } else {
-              this.rows = [];
-              this.gstSummaryRows = [];
-              this.addRow();
-              alert("Done!!", "Stock Manager");
-              this.refresh();
-              this.$store.dispatch("incrementInvoice");
-            }
-          });
+     },
+     checkTrue(){
+      console.log("true");
+      return true;
+    },
+    checkFalse(){
+      console.log("false");
+      return false;
+    },
+    submit() {
+     if (this.checkFields() && this.limit!=0) {
+      const x = {
+        items: this.rows,
+        detail: {
+          invoice: this.invoiceNumber,
+          date: this.date,
+          party: this.getPartyName(),
+          gstNo: this.getPartyGstNo(),
+          totalGst: this.getTotalGst(),
+          getTotalTaxableAmount: this.getTotalTaxableAmount(),
+          totalAmount: this.getTotalSalesAmount(),
+          localParty: this.localParty,
+        }
+      };
+      this.db.sales.insert(x, err => {
+        if (err) {
+          alert("Error Try Again!!", "Stock Manager");
         } else {
-          alert("None of the Fields can be empty or Out Of Stock", "Stock Manager");
+          this._stockChanged();
+          this.rows = [];
+          this.gstSummaryRows = [];
+          this.addRow();
+          alert("Done!!", "Stock Manager");
+          this.refresh();
+          this.$store.dispatch("incrementInvoice");
         }
-      
-      },
-      selected(event, i) {
-        let stock = this.findStock(event)[0];
-        let row = this.rows[i];
-        row.stockName = stock.stockName;
-        this.stock(this.rows[0].stockName);
-        row.HSNCode = stock.HSNCode;
-        row.rate = stock.defaultSP;
-        row.taxPer = this.getTaxRate(stock.taxCategory,this.date,this.getToday());
- },
-      addRow() {
-       const x = {
-          stockName: "",
-          HSNCode: "",
-          quantity: "",
-          rate: "",
-          amount: "",
-          discount: "",
-          taxableValue: "",
-          taxPer: "",
-          gst: "",
-          totalAmount: "",
-          flag: false
-       };
-        this.rows.push(x);
-      },
-      addSummaryRow() {
-      },
-      getTotal() {
-        let total = 0;
-        for (const row of this.rows) {
-          total += Number.parseInt(row.totalAmount, 10);
-        }
-        return total;
-      },
-      checkFields() {
-        let nullValues = true;
-        this.rows.forEach(data => {
-          if (data.stockName === "") {
-            nullValues = false;
-          }
-        });
+      });
+    } else {
+      alert("None of the Fields can be empty or Out Of Stock", "Stock Manager");
+    }
+  },
+  _stockChanged(){
+    console.log("Called stock Changed")
+    this.rows.forEach((data) => {
+      let changeData = {
+        id: data.id,
+        quantity: parseInt(data.quantity),
+        date: this.getToday(),
+        type: "DECREMENT",
+      }
+      this.changeStock(changeData);
+    })
+  },
+  selected(event, i) {
+    let stock = this.findStock(event)[0];
+    let row = this.rows[i];
+    row.stockName = stock.stockName;
+    this.stock(this.rows[0].stockName);
+    row.HSNCode = stock.HSNCode;
+    row.rate = stock.defaultSP;
+    row.id = stock._id;
+    row.taxPer = this.getTaxRate(stock.taxCategory,this.date,this.getToday());
+  },
+  addRow() {
+   const x = {
+    stockName: "",
+    HSNCode: "",
+    quantity: "",
+    rate: "",
+    amount: "",
+    discount: "",
+    taxableValue: "",
+    taxPer: "",
+    gst: "",
+    totalAmount: "",
+    flag: false
+  };
+  this.rows.push(x);
+},
+addSummaryRow() {
+},
+getTotal() {
+  let total = 0;
+  for (const row of this.rows) {
+    total += Number.parseInt(row.totalAmount, 10);
+  }
+  return total;
+},
+checkFields() {
+  let nullValues = true;
+  this.rows.forEach(data => {
+    if (data.stockName === "") {
+      nullValues = false;
+    }
+  });
 
-        return nullValues;
-      },
-      findStock: function (name) {
-        return this.stocks.filter(data => {
-          
-          return (data.stockName === name);
-          
-        });
-      },
-      getTaxRate(categoryName, entryDate ,endDate) {
-        let startDateRange = this._getTaxRateList(categoryName);
-        let dates = startDateRange.filter((data) => this.inRange(entryDate,data.date, endDate));
-        console.log("At getTaxRate", dates);
-        return dates[dates.length-1].value;
-      },
-      _getTaxRateList(categoryName){
-        let list = this.category.filter((data) => data.category === categoryName.toLowerCase());
-        console.log("At _getTaxRateList ",categoryName," ",list);
-        return list[0].rateList;
-      },
-      pdf(){
+  return nullValues;
+},
+findStock: function (name) {
+  return this.stocks.filter(data => {
+
+    return (data.stockName === name);
+
+  });
+},
+getTaxRate(categoryName, entryDate ,endDate) {
+  let startDateRange = this._getTaxRateList(categoryName);
+  let dates = startDateRange.filter((data) => this.inRange(entryDate,data.date, endDate));
+  console.log("At getTaxRate", dates);
+  return dates[dates.length-1].value;
+},
+_getTaxRateList(categoryName){
+  let list = this.category.filter((data) => data.category === categoryName.toLowerCase());
+  console.log("At _getTaxRateList ",categoryName," ",list);
+  return list[0].rateList;
+},
+pdf(){
          // let i=0;
-        html2canvas(document.getElementById("app")).then(canvas => {
-    let img=canvas.toDataURL("image/png");
-        let doc= new JSPDF('l', 'mm', [370, 210]);
-        doc.addImage(img,'JPEG',5,10);
-        doc.save('StockMaster.pdf');
-});
+         html2canvas(document.getElementById("app")).then(canvas => {
+          let img=canvas.toDataURL("image/png");
+          let doc= new JSPDF('l', 'mm', [370, 210]);
+          doc.addImage(img,'JPEG',5,10);
+          doc.save('StockMaster.pdf');
+        });
        // let img=canvas.toDataURL("image/png");
        // var doc= new jsPDF();
        // doc.addImage(img,'JPEG',20,20);
        // doc.save('anvaya.pdf');
-       }
-    },
-    created() {
-      this.date = this.getToday();
-      this.db.stocks = new this.$db({filename: "stocks", autoload: true});
-      this.db.category = new this.$db({filename: "categories", autoload: true});
+     }
+   },
+   created() {
+    this.date = this.getToday();
+    this.db.stocks = new this.$db({filename: "stocks", autoload: true});
+    this.db.category = new this.$db({filename: "categories", autoload: true});
 
-      this.db.stocks.find({}, (err, docs) => {
-        if (err) {
-          alert("Database Error", "Stock Manager");
-        } else {
-          docs.forEach(d => {
-            this.stocks.push(d);
-            this.stockName.push(d.stockName);
-          });
-        }
-      });
-      this.db.category.find({}, (err, docs) => {
-        if (err) {
-          alert("Database Error", "Stock Manager");
-          console.log(err);
-        } else {
-          this.category = docs;
-        }
-      });
+    this.db.stocks.find({}, (err, docs) => {
+      if (err) {
+        alert("Database Error", "Stock Manager");
+      } else {
+        docs.forEach(d => {
+          this.stocks.push(d);
+          this.stockName.push(d.stockName);
+        });
+      }
+    });
+    this.db.category.find({}, (err, docs) => {
+      if (err) {
+        alert("Database Error", "Stock Manager");
+        console.log(err);
+      } else {
+        this.category = docs;
+      }
+    });
       // new this.$promisify(this.db.category.find, {})
       //   .then((data) => this.category = data)
       //   .catch((err) => {
@@ -638,12 +645,12 @@
         let stateId = this.selectedParty.gstin.substring(0, 2);
        // console.log(this.selectedParty.gstin);
 
-        if (stateId === this.$store.getters.getGSTIN.substring(0,2)) {
-          console.log('from sales', this.$store.getters.getGSTIN.substring(0,2))
-          this.localParty = true;
-        } else {
-          this.localParty = false;
-        }
+       if (stateId === this.$store.getters.getGSTIN.substring(0,2)) {
+        console.log('from sales', this.$store.getters.getGSTIN.substring(0,2))
+        this.localParty = true;
+      } else {
+        this.localParty = false;
+      }
         // console.log('sales party',this.localParty);
       },
       date:function(){
@@ -654,10 +661,18 @@
           this.IsPeriod=false;
           console.log('flalbla',this.IsPeriod);
         }
-      
+
       }
     },
     mounted() {
+      // alert("Here")
+      // const changeData = {
+      //   id: '6TxJ3xisw86EP64w',
+      //   quantity: 4,
+      //   date: this.getToday(),
+      //   type: "DECREMENT",
+      // }
+      // this.$store.dispatch("changeStock", changeData);
       this.viewToken = this.getBillFormat;
       this.invoice.number = this.getInvoice;
       this.invoice.suffix = this.getInvoiceSuffix;

@@ -82,7 +82,7 @@
        {{row.openingStock}}
      </td>
      <td>
-       {{row.closingStock}}
+       {{row.closingStock ? row.closingStock : row.openingStock}}
      </td>
      <td>
        {{row.lastUpdated ? row.lastUpdated : 'Never'}}

@@ -1,5 +1,7 @@
 import Vue from 'vue';
-
+import Datastore from "nedb";
+let db = {};
+db.stocks = new Datastore({ filename: "stocks", autoload: true });
 Vue.mixin({
   methods: {
     // Source: http://stackoverflow.com/questions/497790
@@ -15,12 +17,12 @@ Vue.mixin({
       //                  attributes.  **NOTE** month is 0-11.
       return (
         d.constructor === Date ? d :
-          d.constructor === Array ? new Date(d[0], d[1], d[2]) :
-            d.constructor === Number ? new Date(d) :
-              d.constructor === String ? new Date(d) :
-                typeof d === "object" ? new Date(d.year, d.month, d.date) :
-                  NaN
-      );
+        d.constructor === Array ? new Date(d[0], d[1], d[2]) :
+        d.constructor === Number ? new Date(d) :
+        d.constructor === String ? new Date(d) :
+        typeof d === "object" ? new Date(d.year, d.month, d.date) :
+        NaN
+        );
     },
     compare(a, b) {
       // Compare two dates (could be of any type supported by the convert
@@ -33,9 +35,9 @@ Vue.mixin({
       return (
         isFinite(a = this.convert(a).valueOf()) &&
         isFinite(b = this.convert(b).valueOf()) ?
-          (a > b) - (a < b) :
-          NaN
-      );
+        (a > b) - (a < b) :
+        NaN
+        );
     },
     rateListComparator(a, b) {
       a = a.date;
@@ -50,9 +52,9 @@ Vue.mixin({
       return (
         isFinite(a = this.convert(a).valueOf()) &&
         isFinite(b = this.convert(b).valueOf()) ?
-          (a > b) - (a < b) :
-          NaN
-      );
+        (a > b) - (a < b) :
+        NaN
+        );
     },
     inRange(d, start, end) {
       // Checks if date in d is between dates in start and end.
@@ -65,9 +67,9 @@ Vue.mixin({
         isFinite(d = this.convert(d).valueOf()) &&
         isFinite(start = this.convert(start).valueOf()) &&
         isFinite(end = this.convert(end).valueOf()) ?
-          start <= d && d <= end :
-          NaN
-      );
+        start <= d && d <= end :
+        NaN
+        );
     },
     getToday() {
       let today = new Date();
@@ -83,6 +85,46 @@ Vue.mixin({
 
       today = yyyy + '-' + mm + '-' + dd;
       return today.toString();
+    },
+    changeStock(payload) {
+
+      const stockData = {
+        openingStock: '',
+        closingStock: '',
+        lastUpdated: ''
+      }
+
+      db.stocks.findOne({
+        _id: payload.id
+      }, (err,doc) => {
+        const lastUpdated = doc.lastUpdated ? doc.lastUpdated : ''
+        const openingStock = doc.openingStock 
+        const closingStock = doc.closingStock? doc.closingStock : openingStock
+
+        if(lastUpdated === payload.date) {
+        stockData.openingStock = openingStock // same date thus opening stock will not change
+      } else {
+        stockData.openingStock = closingStock // first entry on a particular
+      }
+
+      switch(payload.type) {
+        case 'INCREMENT': 
+        stockData.closingStock = `${parseInt(closingStock) + payload.quantity}`
+        break;
+        case 'DECREMENT':
+        if((parseInt(closingStock) - payload.quantity) <= 0 ){
+          alert("Your Stock is to low","Stock Manager")
+          return
+        } else {
+          stockData.closingStock = `${parseInt(closingStock) - payload.quantity}`
+        }
+        break;
+      }
+      stockData.lastUpdated = payload.date  
+      console.log("Stock Data", stockData)
+      console.log("Find One Data ", doc)
+      db.stocks.update({_id:payload.id},{ $set: stockData})
+    })
     }
   }
 });

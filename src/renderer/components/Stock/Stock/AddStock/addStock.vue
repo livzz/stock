@@ -25,70 +25,70 @@
     <div class="scrollable">
       <table class="table is-bordered is-striped">
         <thead>
-        <tr>
-          <th><abbr title="Serial No.">Sl. No.</abbr></th>
-          <th>Stock Name</th>
-          <th><abbr title="HSN Code">HSN</abbr></th>
-          <th><abbr title="Unit Name">Unit Name</abbr></th>
-          <th><abbr title="Groups">Stock Groups</abbr></th>
-          <th>Tax Category</th>
-          <th>Opening Stock</th>
-          <th>Rate</th>
-          <th><abbr title="Opening Stock x Rate">Amount</abbr></th>
-          <!-- <th>Location</th> -->
-          <th>Set Selling price</th>
-        </tr>
+          <tr>
+            <th><abbr title="Serial No.">Sl. No.</abbr></th>
+            <th>Stock Name</th>
+            <th><abbr title="HSN Code">HSN</abbr></th>
+            <th><abbr title="Unit Name">Unit Name</abbr></th>
+            <th><abbr title="Groups">Stock Groups</abbr></th>
+            <th>Tax Category</th>
+            <th>Opening Stock</th>
+            <th>Rate</th>
+            <th><abbr title="Opening Stock x Rate">Amount</abbr></th>
+            <!-- <th>Location</th> -->
+            <th>Set Selling price</th>
+          </tr>
         </thead>
         <tbody>
-        <tr v-for="(row,i) in rows">
-          <th>{{ i + 1 }}</th>
-          <td>
-            <input class="input " type="text" placeholder="Stock Name" v-model="row.stockName">
-          </td>
-          <td>
-            <input class="input " type="number" placeholder="HSN" v-model="row.HSNCode">
-          </td>
-          <td>
-            <div class="select">
-              <select v-model="row.unitName">
-                <option selected disabled>Select Unit Name</option>
-                <option class="Option" v-for="unit in units">{{unit.main}}</option>
-              </select>
-            </div>
-          </td>
-          <td>
-            <div class="select">
-              <select v-model="row.stockGroup">
-                <option disabled>Select Group</option>
-                <option selected>default</option>
-                <option class="Option" v-for="group in groups">{{group.group}}</option>
-              </select>
-            </div>
-          </td>
-          <td>
-            <div class="select">
-              <select v-model="row.taxCategory">
-                <option disabled selected>Select Category</option>
-                <option v-for="category in categories">{{ category | capitalize }}</option>
-              </select>
-            </div>
-          </td>
-          <td>
-            <input class="input" type="text" placeholder="Opening Stock" v-model="row.openingStock">
-          </td>
-          <td>
-            <input class="input" type="number" placeholder="Rate" v-model="row.rate">
-          </td>
-          <td>
-            <input class="input" type="number" placeholder="Amount" :value="row.openingStock*row.rate">
-          </td>
-          <td>
-            <div class="checkbox">
-              <input type="checkbox" id="checkbox" @click="checkbox(i,$event)">
-              <label for="checkbox"> Set Default</label>
-            </div>
-          </td>
-        </tr>
+          <tr v-for="(row,i) in rows">
+            <th>{{ i + 1 }}</th>
+            <td>
+              <input class="input " type="text" placeholder="Stock Name" v-model="row.stockName">
+            </td>
+            <td>
+              <input class="input " type="number" placeholder="HSN" v-model="row.HSNCode">
+            </td>
+            <td>
+              <div class="select">
+                <select v-model="row.unitName">
+                  <option selected disabled>Select Unit Name</option>
+                  <option class="Option" v-for="unit in units">{{unit.main}}</option>
+                </select>
+              </div>
+            </td>
+            <td>
+              <div class="select">
+                <select v-model="row.stockGroup">
+                  <option disabled>Select Group</option>
+                  <option selected>default</option>
+                  <option class="Option" v-for="group in groups">{{group.group}}</option>
+                </select>
+              </div>
+            </td>
+            <td>
+              <div class="select">
+                <select v-model="row.taxCategory">
+                  <option disabled selected>Select Category</option>
+                  <option v-for="category in categories">{{ category | capitalize }}</option>
+                </select>
+              </div>
+            </td>
+            <td>
+              <input class="input" type="text" placeholder="Opening Stock" v-model="row.openingStock">
+            </td>
+            <td>
+              <input class="input" type="number" placeholder="Rate" v-model="row.rate">
+            </td>
+            <td>
+              <input class="input" type="number" placeholder="Amount" :value="row.openingStock*row.rate">
+            </td>
+            <td>
+              <div class="checkbox">
+                <input type="checkbox" id="checkbox" @click="checkbox(i,$event)">
+                <label for="checkbox"> Set Default</label>
+              </div>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -194,7 +194,7 @@
       },
       addCategory() {
         if (this.category !== "" && this.categories.indexOf(this.category.toLowerCase()) === -1) {
-            this._insertToCategory();
+          this._insertToCategory();
         } else {
           alert("Category Name Already Exits or the field is empty!!", "Stock Manager");
         }
@@ -233,6 +233,7 @@
                 // console.log("found");
                 alert("Error!! Data Already Present in Database")
               } else {
+
                 // console.log('not found')
                 this.db.stocks.insert(this.rows, (err, docs) => {
                   if (err !== null) {

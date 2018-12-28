@@ -1,7 +1,7 @@
-import Datastore from "nedb";
+// import Datastore from "nedb";
 // import * as utils from "../utils";
 let db = {};
-db.stocks = new Datastore({ filename: "stocks", autoload: true });
+// db.stocks = new Datastore({ filename: "stocks", autoload: true });
 // db.stock_log = new Datastore({ filename: "stock_log", autoload: true,timestampData: true });
 
 const state = {
@@ -25,46 +25,42 @@ const getters = {
 const actions = {
   changeStock({ commit }, payload) {
 
-    // payload.data.forEach(() => {
+    // const stockData = {
+    //   openingStock: '',
+    //   closingStock: '',
+    //   lastUpdated: ''
+    // }
 
+    // db.stocks.findOne({
+    //   _id: payload.id
+    // }, (err,doc) => {
+    //   const lastUpdated = doc.lastUpdated
+    //   const openingStock = doc.openingStock
+    //   const closingStock = doc.closingStock
+
+    //   if(lastUpdated === payload.date) {
+    //     stockData.openingStock = openingStock // same date thus opening stock will not change
+    //   } else {
+    //     stockData.openingStock = closingStock // first entry on a particular
+    //   }
+
+    //   switch(payload.type) {
+    //     case 'INCREMENT': 
+    //     stockData.closingStock = `${parseInt(closingStock) + payload.quantity}`
+    //     break;
+    //     case 'DECREMENT':
+    //     if((parseInt(closingStock) - payload.quantity) <= 0 ){
+    //       alert("Your Stock is to low","Stock Manager")
+    //     } else {
+    //       stockData.closingStock = `${parseInt(closingStock) - payload.quantity}`  
+    //     }
+    //     break;
+    //   }
+    //   stockData.lastUpdated = payload.date  
+    //   console.log("Stock Data", stockData)
+    //   console.log("Find One Data ", doc)
+    //   db.stocks.update({_id:payload.id},{ $set: stockData})
     // })
-
-    const stockData = {
-      openingStock: '',
-      closingStock: '',
-      lastUpdated: ''
-    }
-
-    db.stocks.findOne({
-      _id: payload.id
-    }, (err,doc) => {
-      const lastUpdated = doc.lastUpdated
-      const openingStock = doc.openingStock
-      const closingStock = doc.closingStock
-
-      if(lastUpdated === payload.date) {
-        stockData.openingStock = openingStock // same date thus opening stock will not change
-      } else {
-        stockData.openingStock = closingStock // first entry on a particular
-      }
-
-      switch(payload.type) {
-        case 'INCREMENT' : 
-        stockData.closingStock = `${parseInt(closingStock) + payload.quantity}`
-        break;
-        case 'DECREMENT' :
-        if((parseInt(closingStock) - payload.quantity) <= 0 ){
-          alert("Your Stock is to low","Stock Manager")
-        } else {
-          stockData.closingStock = `${parseInt(closingStock) - payload.quantity}`  
-        }
-        break;
-      }
-      stockData.lastUpdated = payload.date  
-      console.log("Stock Data", stockData)
-      console.log("Find One Data ", doc)
-      db.stocks.update({_id:payload.id},{ $set: stockData})
-    })
     
     
     
