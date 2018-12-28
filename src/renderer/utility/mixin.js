@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Datastore from "nedb";
 let db = {};
 db.stocks = new Datastore({ filename: "stocks", autoload: true });
+db.stocks.loadDatabase();
 Vue.mixin({
   methods: {
     // Source: http://stackoverflow.com/questions/497790
@@ -87,44 +88,54 @@ Vue.mixin({
       return today.toString();
     },
     changeStock(payload) {
-
+      console.log("Called Changed stock");
       const stockData = {
         openingStock: '',
         closingStock: '',
         lastUpdated: ''
       }
+      return new Promise((resolve,reject) => {
+        console.log("Promise executing")
+        db.stocks.findOne({
+          _id: payload.id
+        }, (err, doc) => {
+          const lastUpdated = doc.lastUpdated ? doc.lastUpdated : ''
+          const openingStock = doc.openingStock
+          const closingStock = doc.closingStock ? doc.closingStock : openingStock
 
-      db.stocks.findOne({
-        _id: payload.id
-      }, (err,doc) => {
-        const lastUpdated = doc.lastUpdated ? doc.lastUpdated : ''
-        const openingStock = doc.openingStock 
-        const closingStock = doc.closingStock? doc.closingStock : openingStock
+          if (lastUpdated === payload.date) {
+            stockData.openingStock = openingStock // same date thus opening stock will not change
+          } else {
+            stockData.openingStock = closingStock // first entry on a particular
+          }
 
-        if(lastUpdated === payload.date) {
-        stockData.openingStock = openingStock // same date thus opening stock will not change
-      } else {
-        stockData.openingStock = closingStock // first entry on a particular
-      }
-
-      switch(payload.type) {
-        case 'INCREMENT': 
-        stockData.closingStock = `${parseInt(closingStock) + payload.quantity}`
-        break;
-        case 'DECREMENT':
-        if((parseInt(closingStock) - payload.quantity) <= 0 ){
-          alert("Your Stock is to low","Stock Manager")
-          return
-        } else {
-          stockData.closingStock = `${parseInt(closingStock) - payload.quantity}`
-        }
-        break;
-      }
-      stockData.lastUpdated = payload.date  
-      console.log("Stock Data", stockData)
-      console.log("Find One Data ", doc)
-      db.stocks.update({_id:payload.id},{ $set: stockData})
-    })
+          switch (payload.type) {
+            case 'INCREMENT':
+              stockData.closingStock = `${parseInt(closingStock) + payload.quantity}`
+              break;
+            case 'DECREMENT':
+              if ((parseInt(closingStock) - payload.quantity) <= 0) {
+                alert("Your Stock is to low", "Stock Manager")
+                return reject()
+              } else {
+                stockData.closingStock = `${parseInt(closingStock) - payload.quantity}`
+              }
+              break;
+          }
+          stockData.lastUpdated = payload.date
+          console.log("Stock Data", stockData)
+          console.log("Find One Data ", doc)
+          db.stocks.update({
+            _id: payload.id
+          }, {
+            $set: stockData
+          },{},err => {
+            
+            resolve()
+          })
+          console.log("Error ",err);
+        })
+      })
     }
   }
 });
